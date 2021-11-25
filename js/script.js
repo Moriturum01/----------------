@@ -61,8 +61,12 @@ const getExpensesMonth = () => {
     // if (i === 1) {
     //   expenses2 = prompt("Введите обязательную статью расходов: ", "Кредит");
     // }
-    if (!isNumber(sum)) {
-      sum += +prompt("Во сколько это обойдется?");!!! не понял пока как проверить.
+    let price = prompt("Во сколько это обойдется?");
+    if (isNumber(price)) {
+      sum += +price;
+    } else {
+      alert("Введите корректные данные!");
+      i--;
     }
   }
   console.log(expenses);
