@@ -1,7 +1,6 @@
 "use strict";
 
-let money = 0,
-  expenses = [];
+let money = 0;
 
 const isNumber = (n) => {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -47,8 +46,11 @@ let appData = {
 
     for (let i = 0; i < 2; i++) {
       //Задаем вопрос 2 раза
+      appData.expenses = prompt(
+        "Введите обязательную статью расходов: ",
+        "Квартплата"
+      );
 
-      expenses[i] = prompt("Введите обязательную статью расходов: ");
       // if (i === 0) {
       //   expenses1 = prompt(
       //     "Введите обязательную статью расходов: ",
@@ -58,6 +60,7 @@ let appData = {
       // if (i === 1) {
       //   expenses2 = prompt("Введите обязательную статью расходов: ", "Кредит");
       // }
+
       const price = prompt("Во сколько это обойдется?");
       if (isNumber(price)) {
         sum += +price;
@@ -66,14 +69,12 @@ let appData = {
         i--;
       }
     }
-    console.log(expenses);
+    console.log(appData.expenses);
     return sum;
   },
 
-  expensesAmount: getExpensesMonth(),
-
   getAccumulatedMonth: function () {
-    const accumulatedMonth = money - appData.getExpensesMonth();
+    const accumulatedMonth = money - expensesAmount;
     return accumulatedMonth;
   },
 
@@ -100,6 +101,10 @@ let appData = {
   },
 };
 
+appData.asking();
+
+const expensesAmount = appData.getExpensesMonth();
+
 // const addExpenses = prompt(
 //     "Перечислите дополнительные расходы через запятую:",
 //     "Интернет, Такси, Коммуналка"
@@ -110,7 +115,7 @@ let appData = {
 
 // const getExpensesMonth = () => {};
 
-console.log("Расходы за месяц " + appData.getExpensesMonth());
+console.log("Расходы за месяц " + expensesAmount);
 
 // const getAccumulatedMonth = () => {};
 
