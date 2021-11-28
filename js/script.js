@@ -14,7 +14,7 @@ const start = () => {
 
 start();
 
-const appData = {
+let appData = {
   budget: money,
   budgetDay: 0,
   budgetMonth: 0,
@@ -24,9 +24,33 @@ const appData = {
   expenses: {},
   addExpenses: [],
   deposit: false,
+  percentDeposit: 0,
+  moneyDeposit: 0,
   mission: 500000,
   period: 12,
   asking: () => {
+    if (confirm("Есть ли у вас доп.заработок?")) {
+      for (let i = 0; i != 2; i++) {
+        const itemIncome = prompt("Какой у вас есть доп.заработок?", "Таксую");
+        const cashIncome = +prompt(
+          "Сколько в месяц зарабатываете на этом?",
+          10000
+        );
+        if (isNumber(itemIncome)) {
+          alert("Ввдетие коррекнтые данные!");
+          i--;
+          return;
+        }
+        if (!isNumber(cashIncome)) {
+          alert("Введите корректные данные!");
+          i--;
+          return;
+        } else {
+          appData.income[itemIncome] = cashIncome;
+        }
+      }
+    }
+
     const addExpenses = prompt(
       "Перечислите дополнительные расходы через запятую:",
       "Интернет, Такси, Коммуналка"
@@ -83,6 +107,17 @@ const appData = {
       return "Что-то пошло не так";
     }
   },
+
+  getInfoDeposit: () => {
+    if (appData.deposit) {
+      appData.percentDeposit = prompt("Какой годовой процент?", 10);
+      appData.moneyDeposit = prompt("Какая сумма заложена?", 10000);
+    }
+  },
+
+  calcSavedMoney: () => {
+    return appData.budgetMonth * appData.period;
+  },
 };
 
 appData.asking();
@@ -108,6 +143,6 @@ if (appData.getTargetMonth() < 0) {
 console.log(appData.getStatusIncome());
 
 for (const key in appData) {
-  console.log(`Наша программа включает в себя данные: 
+  console.log(`Наша программа включает в себя данные:
   свойство: ${key} и значение: ${appData[key]}`);
 }
