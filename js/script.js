@@ -30,21 +30,15 @@ let appData = {
   period: 12,
   asking: () => {
     if (confirm("Есть ли у вас доп.заработок?")) {
-      for (let i = 0; i != 2; i++) {
+      for (let i = 0; i < 1; i++) {
         const itemIncome = prompt("Какой у вас есть доп.заработок?", "Таксую");
         const cashIncome = +prompt(
           "Сколько в месяц зарабатываете на этом?",
           10000
         );
-        if (isNumber(itemIncome)) {
+        if (isNumber(itemIncome) || !isNumber(cashIncome)) {
           alert("Ввдетие коррекнтые данные!");
           i--;
-          return;
-        }
-        if (!isNumber(cashIncome)) {
-          alert("Введите корректные данные!");
-          i--;
-          return;
         } else {
           appData.income[itemIncome] = cashIncome;
         }
@@ -75,6 +69,10 @@ let appData = {
         sum += +price;
         appData.expenses[question] = +price;
       } else {
+        alert("Введите корректные данные!");
+        i--;
+      }
+      if (isNumber(question)) {
         alert("Введите корректные данные!");
         i--;
       }
@@ -109,9 +107,18 @@ let appData = {
   },
 
   getInfoDeposit: () => {
-    if (appData.deposit) {
-      appData.percentDeposit = prompt("Какой годовой процент?", 10);
-      appData.moneyDeposit = prompt("Какая сумма заложена?", 10000);
+    for (let i = 0; i < 1; i++) {
+      if (appData.deposit) {
+        appData.percentDeposit = prompt("Какой годовой процент?", 10);
+        appData.moneyDeposit = prompt("Какая сумма заложена?", 10000);
+      }
+      if (
+        !isNumber(appData.percentDeposit) ||
+        !isNumber(appData.moneyDeposit)
+      ) {
+        alert("Введите корректные данные!");
+        i--;
+      }
     }
   },
 
@@ -125,6 +132,7 @@ appData.asking();
 appData.getExpensesMonth();
 
 appData.getBudget();
+appData.getInfoDeposit();
 
 const expensesAmount = appData.expensesMonth;
 
