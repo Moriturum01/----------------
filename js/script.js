@@ -14,7 +14,7 @@ const start = () => {
 
 start();
 
-let appData = {
+const appData = {
   budget: money,
   budgetDay: 0,
   budgetMonth: 0,
@@ -44,17 +44,25 @@ let appData = {
         }
       }
     }
+    for (let i = 0; i < 1; i++) {
+      const addExpenses = prompt(
+        "Перечислите дополнительные расходы через запятую:",
+        "Интернет, Такси, Коммуналка"
+      );
 
-    const addExpenses = prompt(
-      "Перечислите дополнительные расходы через запятую:",
-      "Интернет, Такси, Коммуналка"
-    );
-    appData.addExpenses = addExpenses.toLocaleLowerCase().split(",");
+      if (isNumber(addExpenses) || addExpenses === "" || addExpenses === null) {
+        alert("Введите корректные данные или не оставляйте поле пустым!");
+        i--;
+      } else {
+        appData.addExpenses = addExpenses.toLocaleLowerCase().split(",");
+      }
+    }
+
     appData.deposit = confirm("Есть ли у вас депозит в банке?");
   },
 
   getExpensesMonth: () => {
-    let sum = 0; //Объявление переменной общей суммы
+    // let sum = 0; //Объявление переменной общей суммы
 
     for (let i = 0; i < 2; i++) {
       //Задаем вопрос 2 раза
@@ -65,20 +73,21 @@ let appData = {
       );
 
       const price = +prompt("Во сколько это обойдется?");
-      if (isNumber(price)) {
-        sum += +price;
+      if (isNumber(price) && !isNumber(question)) {
+        // sum += +price;
         appData.expenses[question] = +price;
+        appData.expensesMonth += +price;
       } else {
         alert("Введите корректные данные!");
         i--;
       }
-      if (isNumber(question)) {
-        alert("Введите корректные данные!");
-        i--;
-      }
+      // if (isNumber(question)) {
+      //   alert("Введите корректные данные!");
+      //   i--;
+      // }
     }
 
-    appData.expensesMonth = +sum;
+    // appData.expensesMonth = +sum;
   },
 
   getBudget: () => {
@@ -136,7 +145,7 @@ appData.getInfoDeposit();
 
 const expensesAmount = appData.expensesMonth;
 
-console.log("Расходы за месяц " + expensesAmount);
+console.log("Расходы за месяц: " + expensesAmount);
 
 if (appData.getTargetMonth() < 0) {
   console.log("Цель не будет достигнута");
