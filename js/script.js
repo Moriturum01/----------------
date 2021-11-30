@@ -44,20 +44,21 @@ const appData = {
         }
       }
     }
-    for (let i = 0; i < 1; i++) {
-      const addExpenses = prompt(
-        "Перечислите дополнительные расходы через запятую:",
+    // for (let i = 0; i < 1; i++)
+    const addExpenses =
+      prompt(
+        "Перечислите дополнительные расходы через запятую",
         "Интернет, Такси, Коммуналка"
-      );
+      ) || "";
+    // let addExpenses = "";
+    // do {
+    //   addExpenses = prompt(
+    //     "Перечислите дополнительные расходы через запятую:",
+    //     "Интернет, Такси, Коммуналка"
+    //   );
+    // }while (isNumber(addExpenses) || addExpenses.trim() === "" || addExpenses === null);
 
-      if (isNumber(addExpenses) || addExpenses === "" || addExpenses === null) {
-        alert("Введите корректные данные или не оставляйте поле пустым!");
-        i--;
-      } else {
-        appData.addExpenses = addExpenses.toLocaleLowerCase().split(",");
-      }
-    }
-
+    appData.addExpenses = addExpenses.toLocaleLowerCase().split(", ");
     appData.deposit = confirm("Есть ли у вас депозит в банке?");
   },
 
@@ -84,7 +85,6 @@ const appData = {
       // if (isNumber(question)) {
       //   alert("Введите корректные данные!");
       //   i--;
-      // }
     }
 
     // appData.expensesMonth = +sum;
@@ -163,3 +163,16 @@ for (const key in appData) {
   console.log(`Наша программа включает в себя данные:
   свойство: ${key} и значение: ${appData[key]}`);
 }
+console.log(appData.addExpenses);
+
+console.log(
+  appData.addExpenses.map((word) => {
+    return word[0].toUpperCase() + word.slice(1);
+  })
+);
+// let str = addExpenses;
+// stroka = stroka.map((w) => {
+//   return w[0].toUpperCase() + w.slice(1);
+// });
+// str = str;
+// console.log(str);
